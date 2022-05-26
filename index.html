@@ -8,6 +8,19 @@
   </head>
   <body>
     <h1>Library</h1>
+    <form id="form">
+      <label for="book">Book</label>
+      <input type="text" id="book" required />
+      <label for="author" id="author">Author</label>
+      <input type="text" id="author" required />
+      <label for="status">Status</label>
+      <select id="status" required>
+        <option value="read">Read</option>
+        <option value="not-read">Not Read</option>
+      </select>
+      <button type="submit">Submit</button>
+    </form>
+
     <table class="books-table">
       <thead>
         <th>Name</th>

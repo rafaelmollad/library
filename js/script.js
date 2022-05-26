@@ -1,40 +1,43 @@
+const formEl = document.querySelector("#form");
 const tableBodyEl = document.querySelector(".books-table__body");
 
 const myLibrary = [
   {
     name: "Harry Potter y la piedra filosofal",
     author: "J.K Rowling",
-    pages: 309,
     read: true,
   },
   {
     name: "Fantastic Beasts and Where to Find Them",
     author: "J.K Rowling",
-    pages: 750,
     read: false,
   },
   {
     name: "Rich Dad Poor Dad",
     author: "Robert Kiyosaki",
-    pages: 336,
     read: true,
   },
 ];
 
-function Book(name, author, pages, read) {
+function Book(name, author, read) {
   this.name = name;
   this.author = author;
-  this.pages = pages;
   this.read = read;
 }
 
+// Adds new book to library
 function addBookToLibrary(book) {
-  // do stuff here
   myLibrary.push(book);
 }
 
+// Delete book from library
+function deleteBook() {}
+
 // Display books
 const displayBooks = (books) => {
+  // Clear dom
+  tableBodyEl.innerHTML = "";
+
   books.forEach((book) => {
     const row = document.createElement("tr");
 
@@ -42,17 +45,35 @@ const displayBooks = (books) => {
     <td>${book.name}</td>
     <td>${book.author}</td>
     <td>${book.read ? "Read" : "Not Read"}</td>
+    <td><button>Delete</button></td>
     `;
 
     tableBodyEl.append(row);
   });
 };
 
-const winter = new Book("This Winter", "Alice Oseman", 144, false);
-addBookToLibrary(winter);
+formEl.addEventListener("submit", (e) => {
+  console.log("Form submitted");
+  e.preventDefault();
 
-const wonder = new Book("Wonder", "R. J. Palacio", 320, false);
-addBookToLibrary(wonder);
+  // Get values from form
+  const name = e.target[0].value;
+  const author = e.target[1].value;
+  const read = e.target[2].value;
+
+  // Create new Book
+  const newBook = new Book(name, author, read);
+
+  // Add new book to my library
+  myLibrary.push(newBook);
+
+  // Re render the list of books
+  displayBooks(myLibrary);
+
+  // Clear inputs
+  e.target[0].value = "";
+  e.target[1].value = "";
+});
 
 // Call display books
 displayBooks(myLibrary);
