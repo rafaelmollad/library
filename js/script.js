@@ -1,10 +1,11 @@
+// Get elements
 const formEl = document.querySelector("#form");
 const bookNameEl = document.querySelector("#book");
 const bookAuthorEl = document.querySelector("#author");
 const bookStatusEl = document.querySelector("#status");
-
 const tableBodyEl = document.querySelector(".books-table__body");
 
+// Array to store each Book
 const myLibrary = [
   {
     name: "Harry Potter y la piedra filosofal",
@@ -23,13 +24,14 @@ const myLibrary = [
   },
 ];
 
+// Book constructor
 function Book(name, author, status) {
   this.name = name;
   this.author = author;
   this.status = status;
 }
 
-// Adds new book to library
+// Add new book to library
 function addBookToLibrary(book) {
   myLibrary.push(book);
 }
@@ -38,6 +40,12 @@ function addBookToLibrary(book) {
 function deleteBook(bookId) {
   myLibrary.splice(bookId, 1);
 }
+
+// Toggle Book status
+Book.prototype.toggleStatus = function () {
+  this.status = this.status === "Read" ? "Not Read" : "Read";
+  console.log(this);
+};
 
 // Display books
 const displayBooks = () => {
@@ -51,17 +59,25 @@ const displayBooks = () => {
     row.innerHTML = `
     <td>${book.name}</td>
     <td>${book.author}</td>
-    <td>${book.status}</td>
-    <td><button class="delete" data-book-id=${index}>Delete</button></td>
+    <td><button class="status-btn" data-book-id=${index}>${book.status}</button></td>
+    <td><button class="delete-btn" data-book-id=${index}>Delete</button></td>
     `;
 
     tableBodyEl.append(row);
   });
 
   // Add event listener to every delete button
-  document.querySelectorAll(".delete").forEach((btn) => {
+  document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       deleteBook(btn.dataset.bookId);
+      displayBooks();
+    });
+  });
+
+  // Add event listener to every status button
+  document.querySelectorAll(".status-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      myLibrary[btn.dataset.bookId].toggleStatus();
       displayBooks();
     });
   });
@@ -90,4 +106,5 @@ formEl.addEventListener("submit", (e) => {
   bookAuthorEl.value = "";
 });
 
+// First render
 displayBooks(myLibrary);
