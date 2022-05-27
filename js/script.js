@@ -93,6 +93,7 @@ formEl.addEventListener("submit", (e) => {
   // Clear inputs
   bookNameEl.value = "";
   bookAuthorEl.value = "";
+  bookStatusEl.value = "not-read";
 });
 
 // First render
