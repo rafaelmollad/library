@@ -31,7 +31,6 @@ function deleteBook(bookId) {
 // Toggle Book status
 Book.prototype.toggleStatus = function () {
   this.status = this.status === "Read" ? "Not Read" : "Read";
-  console.log(this);
 };
 
 // Display books
@@ -58,8 +57,12 @@ const displayBooks = () => {
   // Add event listener to every delete button
   document.querySelectorAll(".delete-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      deleteBook(btn.dataset.bookId);
-      displayBooks();
+      const bookName = myLibrary[btn.dataset.bookId].name;
+
+      if (confirm(`Are you sure you want to delete "${bookName}"?`)) {
+        deleteBook(btn.dataset.bookId);
+        displayBooks();
+      }
     });
   });
 
@@ -73,7 +76,6 @@ const displayBooks = () => {
 };
 
 formEl.addEventListener("submit", (e) => {
-  console.log("Form submitted");
   e.preventDefault();
 
   // Get form values
