@@ -7,21 +7,8 @@ const tableBodyEl = document.querySelector(".books-table__body");
 
 // Array to store each Book
 const myLibrary = [
-  {
-    name: "Harry Potter y la piedra filosofal",
-    author: "J.K Rowling",
-    status: "Read",
-  },
-  {
-    name: "Fantastic Beasts and Where to Find Them",
-    author: "J.K Rowling",
-    status: "Not Read",
-  },
-  {
-    name: "Rich Dad Poor Dad",
-    author: "Robert Kiyosaki",
-    status: "Read",
-  },
+  new Book("Harry Potter and the Philosopher's Stone", "J.K Rowling", "Read"),
+  new Book("Rich Dad, Poor Dad", "Robert Kiyosaki", "Not Read"),
 ];
 
 // Book constructor
@@ -55,12 +42,14 @@ const displayBooks = () => {
   // Loop through each book in myLibrary and update the DOM
   myLibrary.forEach((book, index) => {
     const row = document.createElement("tr");
+    const statusBtnClass =
+      book.status === "Read" ? "btn-success" : "btn-secondary";
 
     row.innerHTML = `
-    <td>${book.name}</td>
-    <td>${book.author}</td>
-    <td><button class="status-btn" data-book-id=${index}>${book.status}</button></td>
-    <td><button class="delete-btn" data-book-id=${index}>Delete</button></td>
+    <td class="align-middle">${book.name}</td>
+    <td class="align-middle">${book.author}</td>
+    <td><button class="btn ${statusBtnClass} text-nowrap status-btn" data-book-id=${index}>${book.status}</button></td>
+    <td><button class="btn btn-danger delete-btn" data-book-id=${index}>Delete</button></td>
     `;
 
     tableBodyEl.append(row);

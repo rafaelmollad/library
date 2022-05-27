@@ -5,33 +5,86 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
-    <!-- Form -->
-    <h1>Library</h1>
-    <form id="form">
-      <label for="book">Book</label>
-      <input type="text" id="book" required />
-      <label for="author">Author</label>
-      <input type="text" id="author" required />
-      <label for="status">Status</label>
-      <select id="status" required>
-        <option value="read">Read</option>
-        <option value="not-read">Not Read</option>
-      </select>
-      <button type="submit">Submit</button>
-    </form>
+    <div class="container-fluid">
+      <!-- Form -->
+      <header class="row">
+        <navbar class="navbar bg-light">
+          <div class="container-fluid d-flex align-items-center">
+            <a href="#" class="navbar-brand fs-1 fw-light"
+              >Good<span class="fw-normal">books.</span></a
+            >
+          </div>
+        </navbar>
+      </header>
+      <form id="form" class="my-3">
+        <div class="row mb-3">
+          <div class="col-md-5">
+            <label for="book" class="col-md-1 col-form-label fw-semibold"
+              >Book</label
+            >
+            <input
+              type="text"
+              id="book"
+              placeholder="E.g., Harry Potter and the Philosopher's Stone
+            "
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="col-md-5">
+            <label for="author" class="col-md-1 col-form-label fw-semibold"
+              >Author</label
+            >
+            <input
+              type="text"
+              id="author"
+              placeholder="E.g., J.K Rowling"
+              class="form-control"
+              required
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="status" class="col-md-1 col-form-label fw-semibold"
+              >Status</label
+            >
+            <select id="status" class="form-select" required>
+              <option value="read">Read</option>
+              <option value="not-read" selected>Not Read</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
 
-    <!-- Table -->
-    <table class="books-table">
-      <thead>
-        <th>Name</th>
-        <th>Author</th>
-        <th>Status</th>
-      </thead>
+      <!-- Table -->
+      <table class="table table-striped books-table">
+        <thead>
+          <th>Name</th>
+          <th>Author</th>
+          <th>Status</th>
+        </thead>
 
-      <tbody class="books-table__body"></tbody>
-    </table>
+        <tbody class="books-table__body"></tbody>
+      </table>
+    </div>
+    <!-- JavaScript Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+      crossorigin="anonymous"
+    ></script>
     <script src="js/script.js"></script>
   </body>
 </html>
