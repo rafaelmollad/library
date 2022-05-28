@@ -5,11 +5,10 @@ const bookAuthorEl = document.querySelector("#author");
 const bookStatusEl = document.querySelector("#status");
 const tableBodyEl = document.querySelector(".books-table__body");
 
-// Array to store each Book
-const myLibrary = [
-  new Book("Harry Potter and the Philosopher's Stone", "J.K Rowling", "Read"),
-  new Book("Rich Dad, Poor Dad", "Robert Kiyosaki", "Not Read"),
-];
+// Get books from localStorage and convert each into a Book instance
+const myLibrary = JSON.parse(localStorage.getItem("books") || "[]").map(
+  (book) => new Book(book.name, book.author, book.status)
+);
 
 // Book constructor
 function Book(name, author, status) {
@@ -18,20 +17,27 @@ function Book(name, author, status) {
   this.status = status;
 }
 
+// Toggle Book status
+Book.prototype.toggleStatus = function () {
+  this.status = !this.status;
+};
+
 // Add new book to library
 function addBookToLibrary(book) {
   myLibrary.push(book);
+  updateLocalStorage();
 }
 
 // Delete book from library
 function deleteBook(bookId) {
   myLibrary.splice(bookId, 1);
+  updateLocalStorage();
 }
 
-// Toggle Book status
-Book.prototype.toggleStatus = function () {
-  this.status = this.status === "Read" ? "Not Read" : "Read";
-};
+// Update localStorage
+function updateLocalStorage() {
+  localStorage.setItem("books", JSON.stringify(myLibrary));
+}
 
 // Display books
 const displayBooks = () => {
@@ -41,13 +47,13 @@ const displayBooks = () => {
   // Loop through each book in myLibrary and update the DOM
   myLibrary.forEach((book, index) => {
     const row = document.createElement("tr");
-    const statusBtnClass =
-      book.status === "Read" ? "btn-success" : "btn-secondary";
+    const statusBtnClass = book.status ? "btn-success" : "btn-secondary";
+    const statusBtnText = book.status ? "Read" : "Not Read";
 
     row.innerHTML = `
     <td class="align-middle">${book.name}</td>
     <td class="align-middle">${book.author}</td>
-    <td><button class="btn ${statusBtnClass} text-nowrap status-btn" data-book-id=${index}>${book.status}</button></td>
+    <td><button class="btn ${statusBtnClass} text-nowrap status-btn" data-book-id=${index}>${statusBtnText}</button></td>
     <td><button class="btn btn-danger delete-btn" data-book-id=${index}>Delete</button></td>
     `;
 
@@ -70,6 +76,7 @@ const displayBooks = () => {
   document.querySelectorAll(".status-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       myLibrary[btn.dataset.bookId].toggleStatus();
+      updateLocalStorage();
       displayBooks();
     });
   });
@@ -81,7 +88,7 @@ formEl.addEventListener("submit", (e) => {
   // Get form values
   const name = bookNameEl.value;
   const author = bookAuthorEl.value;
-  const status = bookStatusEl.value === "read" ? "Read" : "Not Read";
+  const status = bookStatusEl.value === "read" ? true : false;
 
   // Create new Book
   const newBook = new Book(name, author, status);
